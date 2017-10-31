@@ -65,13 +65,6 @@ def nomeJogadores(numeroDeJogadores):
     for jogador in range(numeroDeJogadores):
         print('Jogador {} sua peça é {}.'.format(players[jogador],pecas[jogador]))
             
-'''
-    limpaTela()
-    cabecalho()
-
-    for jogador in range(numeroDeJogadores):
-        print('JOGADOR {}: {}'.format(jogador + 1,players[jogador]))
- '''   
 
 def criarTabuleiro():
     Tabuleiro = []
@@ -79,7 +72,7 @@ def criarTabuleiro():
     for linha in range(4): 
         Tabuleiro.append([])
         for coluna in range(linha+1):
-            Tabuleiro[linha].append("\033[33mO")  #0 1 2 3
+            Tabuleiro[linha].append("O")  #0 1 2 3
 
     for linha in range(13,9,-1): #13 12 11 10
         Tabuleiro.append([])
