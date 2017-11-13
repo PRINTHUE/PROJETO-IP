@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 from GUI import *
 
 def adicionarPecas(tabuleiro, numeroDeJogadores):
     tabuleiro = criarTabuleiro()
     nomeJogadores(numeroDeJogadores)
-    
     
     if (numeroDeJogadores == 2):
         for linha in range(4):
@@ -93,11 +92,13 @@ def adicionarPecas(tabuleiro, numeroDeJogadores):
     
     return tabuleiro
 
+
 def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
     if salto == True:
-        quantidadeDeLinhasPraPular=2
+        quantidadeDeLinhasPraPular = 2
+        
     else:
-        quantidadeDeLinhasPraPular=1
+        quantidadeDeLinhasPraPular = 1
 
     #a linha aumentará ou diminuirá
     proximaLinha = linhaAtual
@@ -169,7 +170,60 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
             
     elif direcao == "l":
         posicaoNaProximaLinha -= quantidadeDeLinhasPraPular
+        
     else: #"r"
         posicaoNaProximaLinha += quantidadeDeLinhasPraPular
 
     return [proximaLinha, posicaoNaProximaLinha]
+
+
+def validaString(entrada):
+    totalDeTracos = 0
+    tamanhoDaEntrada = len(entrada)
+
+    for caractere in range(tamanhoDaEntrada):
+        if (entrada[caractere] == ""):
+            return False
+            break
+
+    if (tamanhoDaEntrada == 3):
+        if entrada[0].isdigit() and entrada[1].isdigit():
+            if entrada[2].isalpha():
+                return True
+
+        else:
+            return False
+                                    
+    else:
+        return False
+14-2-lr
+
+def tentarMovimento(movimento,tabuleiro,jogador,salto=False):
+
+# Valida string 
+# split('')
+# vericar se a peça está nos limites do tabuleiro
+# verificar se a peça é jogador
+# pegar proxima posicao (sem salto)
+# verificar se a proxima posicao esta vazia
+# Caso o movimento não funcione
+# pegar proxima posicao com salto
+# verifica se a proxima posicao esta vazia, verificar se a posicao intermediaria nao esta vazia (caso aconteca, efetue o movimento)
+# Caso o tamanho seja maior que 3, chamar tentarMovimento, tendo como parametro a proxima direcao
+
+
+
+def pedirJogada():
+    variavel_loop = 'Sem vencendor'
+    numero = menuInicial()
+    quantidadeDeJogadores = nomeJogadores()
+
+    while  (variavel_loop == 'Sem vencendor'):
+        for jogador in range(quantidadeDeJogadores):
+            entrada = input('{} insira seu movimento: '.format(quantidadeDeJogadores[jogores])).split('-')
+            validaEntrada(entrada)
+
+            while validaEntrada(entrada) == False:
+                pedirJogada(nomeDosJogadores)
+
+pedirJogada()
