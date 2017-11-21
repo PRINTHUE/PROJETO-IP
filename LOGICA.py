@@ -3,9 +3,7 @@
 from GUI import *
 
 def adicionarPecas(tabuleiro, numeroDeJogadores):
-    tabuleiro = criarTabuleiro()
-    nomeJogadores(numeroDeJogadores)
-    
+
     if (numeroDeJogadores == 2):
         for linha in range(4):
             for coluna in range(linha+1):
@@ -114,9 +112,11 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
     ((linhaAtual>=14 and linhaAtual<=17) and (proximaLinha>=14 and proximaLinha<=17)) or   #movimento todo na 4a faixa
     ((linhaAtual>=5 and linhaAtual<=13) and (proximaLinha>=5 and proximaLinha<=13))):      #movimento todo na 2a e 3a faixas
         deslocamento = 0  #não precisava, mas estou apenas reforcando
+
     elif (((linhaAtual>=1 and linhaAtual<=4) and (proximaLinha>=5 and proximaLinha<=9)) or #movimento da 1a pra 2a faixa
     ((linhaAtual>=14 and linhaAtual<=17) and (proximaLinha>=9 and proximaLinha<=13))):     #movimento da 4a pra 3a faixa
         deslocamento = 4
+
     elif (((linhaAtual>=5 and linhaAtual<=9) and (proximaLinha>=1 and proximaLinha<=4)) or #movimento da 2a pra 1a faixa
     ((linhaAtual>=9 and linhaAtual<=13) and (proximaLinha>=14 and proximaLinha<=17))):     #movimento da 3a pra 4a faixa
         deslocamento = -4
@@ -127,44 +127,54 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
         ((linhaAtual>=9 and linhaAtual<=13) and (proximaLinha>=9 and proximaLinha<=13)) or     #movimento todo na 3a faixa
         ((linhaAtual>=5 and linhaAtual<=6) and (proximaLinha>=3 and proximaLinha<=4))):        #movimento da faixa 2 para a faixa 1
             posicaoNaProximaLinha += deslocamento - quantidadeDeLinhasPraPular
+
             if linhaAtual == 6 and proximaLinha == 4:                                          #caso especial: movimento da 2a p 1a faixa
                 posicaoNaProximaLinha += 1
         else:
             posicaoNaProximaLinha += deslocamento
             if linhaAtual == 14 and proximaLinha == 12:                                        #caso especial: movimento da 4a p 3a faixa
                 posicaoNaProximaLinha -= 1
+
     elif direcao=="ur" :
         if (((linhaAtual>=5 and linhaAtual<=9) and (proximaLinha>=5 and proximaLinha<=9)) or   #movimento todo na 2a faixa
         ((linhaAtual>=14 and linhaAtual<=17) and (proximaLinha>=14 and proximaLinha<=17)) or   #movimento todo na 4a faixa
         ((linhaAtual>=14 and linhaAtual<=15) and (proximaLinha>=12 and proximaLinha<=13))):    #movimento inicia na 4a faixa e termina na 3a faixa
             posicaoNaProximaLinha += deslocamento + quantidadeDeLinhasPraPular
+
             if linhaAtual == 14 and proximaLinha == 12:                                        #caso especial: movimento da 4a p 3a faixa
                 posicaoNaProximaLinha -= 1
         else:
             posicaoNaProximaLinha += deslocamento
+
             if linhaAtual == 6 and proximaLinha == 4:                                          #caso especial: movimento da 2a p 1a faixa
                 posicaoNaProximaLinha += 1
+
     elif direcao == "dr" :
         if (((linhaAtual>=1 and linhaAtual<=4) and (proximaLinha>=1 and proximaLinha<=6)) or   #movimento todo na 1a faixa
         ((linhaAtual>=9 and linhaAtual<=13) and (proximaLinha>=9 and proximaLinha<=15)) or     #movimento todo na 3a faixa
         ((linhaAtual>=12 and linhaAtual<=13) and (proximaLinha>=14 and proximaLinha<=15))):    #movimento inicia na 4a faixa e termina na 3a faixa
             posicaoNaProximaLinha += deslocamento + quantidadeDeLinhasPraPular
+
             if ((linhaAtual == 4 and proximaLinha == 6) or                                     #caso especial: movimento da 1a p 2a faixa
             (linhaAtual == 12 and proximaLinha == 14)):                                        #caso especial: movimento da 3a p 4a faixa 
                 posicaoNaProximaLinha -= 1
+
             elif(linhaAtual==13 and (proximaLinha>=14 and proximaLinha<=15)):                  #caso especial: movimento inicia na 3a faixa e termina na 4a faixa
                 posicaoNaProximaLinha -= quantidadeDeLinhasPraPular
         else:
-            posicaoNaProximaLinha += deslocamento            
+            posicaoNaProximaLinha += deslocamento 
+
     elif direcao=="dl" :
         if (((linhaAtual>=5 and linhaAtual<=9) and (proximaLinha>=5 and proximaLinha<=9)) or   #movimento todo na 2a faixa
         ((linhaAtual>=14 and linhaAtual<=17) and (proximaLinha>=14 and proximaLinha<=17)) or   #movimento todo na 4a faixa
         ((linhaAtual>=12 and linhaAtual<=13) and (proximaLinha>=14 and proximaLinha<=15))):    #movimento da faixa 3 para a faixa 4
             posicaoNaProximaLinha += deslocamento - quantidadeDeLinhasPraPular
+
             if linhaAtual == 12 and proximaLinha == 14:                                        #caso especial: movimento da 3a p 4a faixa
                 posicaoNaProximaLinha += 1
         else:
             posicaoNaProximaLinha += deslocamento
+
             if linhaAtual == 4 and proximaLinha == 6:                                          #caso especial: movimento da 1a p 2a faixa
                 posicaoNaProximaLinha -= 1
             
@@ -174,21 +184,22 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
     else: #"r"
         posicaoNaProximaLinha += quantidadeDeLinhasPraPular
 
-    return [proximaLinha, posicaoNaProximaLinha]
+    print([int(proximaLinha), int(posicaoNaProximaLinha)])
+    return [int(proximaLinha), int(posicaoNaProximaLinha)]
+    
+    
 
+def validaString(entrada):
+    tamanhoDaEntrada = len(entrada)
 
-#Faz a validação da string inserida
-def validaString(movimento):
-    tamanhoDoMovimento = len(movimento)
-
-    for caractere in range(tamanhoDoMovimento):
+    for caractere in range(tamanhoDaEntrada): # 0 1 2
         if (entrada[caractere] == ""):
             return False
             break 
 
-    if (tamanhoDoMovimento == 3):
-        if movimento[0].isdigit() and movimento[1].isdigit():
-            if movimento[2].isalpha():
+    if (tamanhoDaEntrada == 3):
+        if entrada[0].isdigit() and entrada[1].isdigit():
+            if entrada[2].isalpha():
                 return True
 
         else:
@@ -199,47 +210,144 @@ def validaString(movimento):
 
 
 
-def tentarMovimento(movimento,tabuleiro,jogador,salto=False):
-    #Recebe o nº de jogadores do menu inicial
-    numeroDeJogadores = menuInicial()
+def verificaLimites(entrada,tabuleiro):
+    if int(entrada[0]) and int(entrada[0]) <= len(tabuleiro):
+        if int(entrada[1]) >= 1 and int(entrada[1]) <= len(tabuleiro[int(entrada[0])])-1 :
+            return True
 
-    #Valida a tentativa de movimento
-    validaString(movimento)
+        else:
+            return False
 
-    while validaString(movimento) == False:
-        print('Ops! movimento inválido, tente novamente.\n')
-        movimento = input('Movimento: ').split('-')
-        linhaAtual = movimento[0]
-        posicaoNaLinhaAtual = movimento[1]
-        direcao = movimento[2]
 
-        validaString(movimento)
 
-    def verificaLimites(movimento,tabuleiro):
-        if int(movimento[0]) and int(movimento[0]) <= len(tabuleiro):
-            if int(movimento[1]) >= 1 and int(movimento[1]) <= len(tabuleiro[int(movimento[0])])-1 :
-                return True
+def verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro):
+    if tabuleiro[novaLinha-1][novaPosicao-1] == "O":
+        return True
+
+    else:
+        return False
+
+
+'''
+def entrada_linha_posicao():
+    entrada = input("Movimento: ").split("-")
+    linhaAtual = entrada[0]
+    posicaoNaLinhaAtual = entrada[1]
+    direcao = entrada[2]
+
+    return [entrada,linhaAtual,posicaoNaLinhaAtual,direcao]
+'''
+
+
+def tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto=False):
+
+        # Valida a entrada e se a peça existe no tabuleiro
+        validaString(entrada)
+        linhaAtual = entrada[0]
+        posicaoNaLinhaAtual = entrada[1]
+
+        verificaLimites(entrada,tabuleiro)
+
+        #mov simples
+        if tabuleiro[linhaAtual-1][posicaoNaLinhaAtual-1] == jogadores[jogadorDaVez][1]:
+            novaLinha, novaPosicao = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False).split(",")
+
+            if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
+                if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
+                    return [novaLinha,novaPosicao]
+                #mov c salto
+                else:
+                    salto=True
+                    novaLinha, novaPosicao = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto).split(",")
+
+                    if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
+                        if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
+                            if len(entrada) == 3:
+                                return [novaLinha,novaPosicao]
+
+                            else:
+                                entrada[0] = novaLinha
+                                entrada[1] = novaPosicao
+                                del entrada[2]
+                                return tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto3)
 
             else:
-                return False
+                return []
 
-    pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)
+        else: 
+            return []
+
+
+'''
+
+        while (validaString(entrada) == False) or (verificaLimites(entrada,tabuleiro) == False):
+            print('Ops! movimento inválido, tente novamente.\n')
+            entrada_linha_posicao()
+
+            validaString(entrada)
+            verificaLimites(entrada,tabuleiro)
+            linhaAtual = entrada[0]
+            posicaoNaLinhaAtual = entrada[1]
+            direcao = entrada[2]
+
+
+        linhaAtual = entrada[0]
+        posicaoNaLinhaAtual = entrada[1]            
+        direcao = entrada[2]
+        if tabuleiro[linhaAtual-1][posicaoNaLinhaAtual-1] == jogadores[jogadorDaVez][1]:
+            novaLinha = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)[0]
+            novaPosicao = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)[1]
+            limite = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)
+            verificaLimites(limite)  
+
+
+        while  (verificaLimites == False) or (validaString == False):
+            print("Jogada Inválida!")
+            entrada = input("Movimento: ").split("-")
+            linhaAtual = entrada[0]
+            posicaoNaLinhaAtual = entrada[1]
+            direcao = entrada[2]
+
+            limite = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)
+            validaString(entrada)
+            verificaLimites(entrada,tabuleiro)
+            novaLinha, novaPosicao = limite.split(",")
+
+
+        vazio = verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)
+        if vazio == True:
+            tabuleiro[novaLinha-1][novaPosicao-1] == listaDoJogadores[jogada]
+            tabuleiro[linhaAtual-1][posicaoNaLinhaAtual-1] == "O"
+
+        else:
+            while (vazio == False) and (validaString(entrada)) == False and (verificaLimites(entrada,tabuleiro) == False):
+                entrada = input("Movimento: ").split("-")
+                linhaAtual = entrada[0]
+                posicaoNaLinhaAtual = entrada[1]
+                direcao = entrada[2]
+                validaString(entrada)
+                verificaLimites(entrada,tabuleiro)
+
+
+        return tabuleiro
+        imprimirTabuleiro(tabuleiro)
+        jogadorDaVez += 1
+        #Se a variável jogador da vez for igual ao número de jogadores, então seu valor deverá ser zero 
+        if (jogadorDaVez == numeroDeJogadores-1):
+            jogadorDaVez = 0
+'''
+
+
+
 
 
 # Valida string  //
 # split('-')   
 # vericar se a peça está nos limites do tabuleiro //
 # verificar se a peça é do jogador
-# pegar proxima posicao (sem salto)
+# pegar proxima posicao (sem salto) 
 # verificar se a proxima posicao esta vazia
 # Caso o movimento não funcione
 # pegar proxima posicao com salto
 # verifica se a proxima posicao esta vazia, verificar se a posicao intermediaria nao esta vazia (caso aconteca, efetue o movimento)
 # Caso o tamanho seja maior que 3, chamar tentarMovimento, tendo como parametro a proxima direcao
-
-movimento = input('Movimento: ').split('-')
-linhaAtual = movimento[0]
-posicaoNaLinhaAtual = movimento[1]
-direcao = movimento[2]
-
-tentarMovimento(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)

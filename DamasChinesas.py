@@ -1,9 +1,23 @@
 from GUI import *
 from LOGICA import *
 
-numeroJogadores = menuInicial()
 tabuleiro = criarTabuleiro()
-tabuleiro = adicionarPecas(tabuleiro,numeroJogadores)                                                    
-
+numeroDeJogadores = totalDeJogadores()
+tabuleiro = adicionarPecas(tabuleiro,numeroDeJogadores)                                                    
 imprimirTabuleiro(tabuleiro)
-print('\n\n\n')
+
+entrada = input("")
+jogadorDaVez = 0
+
+jogadores = listaDeJogadores(numeroDeJogadores) 
+existeGanhadores = False
+
+while existeGanhadores == False:
+	for jogadorDaVez in range(numeroDeJogadores):
+		entrada = pedirMovimento(jogadores,jogadorDaVez)
+
+		posicaoFinal = tentarMovimento(numeroDeJogadores,jogadorDaVez,jogadores,tabuleiro,salto=False)
+		
+
+	
+print('\n\n\n') 
