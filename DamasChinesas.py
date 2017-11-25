@@ -5,8 +5,6 @@ tabuleiro = criarTabuleiro()
 numeroDeJogadores = totalDeJogadores()
 tabuleiro = adicionarPecas(tabuleiro,numeroDeJogadores)                                                    
 imprimirTabuleiro(tabuleiro)
-
-entrada = input("")
 jogadorDaVez = 0
 
 jogadores = listaDeJogadores(numeroDeJogadores) 
@@ -14,10 +12,23 @@ existeGanhadores = False
 
 while existeGanhadores == False:
 	for jogadorDaVez in range(numeroDeJogadores):
-		entrada = pedirMovimento(jogadores,jogadorDaVez)
+		print("Jogador da Vez: {}".format(jogadores[jogadorDaVez][0]))
+		entrada = input("Insira o seu movimento: ").split("-")
 
-		posicaoFinal = tentarMovimento(numeroDeJogadores,jogadorDaVez,jogadores,tabuleiro,salto=False)
+
+		posicaoFinal = tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto=False)
+
+		linhaAnterior = entrada[0]
+		posicaoAnterior = entrada[1]
+
+
+		#movimento(linhaAnterior,posicaoAnterior,posicaoFinal,jogadores,tabuleiro)
+		movimento = (linhaAnterior,posicaoAnterior,posicaoFinal,jogadores,tabuleiro,jogadorDaVez)
+		#movimento(posicaoFinal)
 		
+		jogadorDaVez += 1
+
+	jogadorDaVez = 0	
 
 	
 print('\n\n\n') 

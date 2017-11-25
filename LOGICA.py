@@ -99,12 +99,15 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
         quantidadeDeLinhasPraPular = 1
 
     #a linha aumentará ou diminuirá
-    proximaLinha = linhaAtual
+    proximaLinha = int(linhaAtual)
     if direcao == "ul" or direcao == "ur":
         proximaLinha -= quantidadeDeLinhasPraPular
     elif direcao == "dl" or direcao == "dr":
         proximaLinha += quantidadeDeLinhasPraPular
     #caso contrário, permanece na mesma linha
+
+    linhaAtual = int(linhaAtual)
+    proximaLinha = int(proximaLinha)
 
     deslocamento = 0
     #se o movimento ocorrer totalmente em uma das três faixas da estrela, então o deslocamento de coluna é 0
@@ -121,7 +124,7 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
     ((linhaAtual>=9 and linhaAtual<=13) and (proximaLinha>=14 and proximaLinha<=17))):     #movimento da 3a pra 4a faixa
         deslocamento = -4
 
-    posicaoNaProximaLinha = posicaoNaLinhaAtual
+    posicaoNaProximaLinha = int(posicaoNaLinhaAtual)
     if direcao=="ul":
         if (((linhaAtual>=1 and linhaAtual<=4) and (proximaLinha>=1 and proximaLinha<=4)) or   #movimento todo na 1a faixa
         ((linhaAtual>=9 and linhaAtual<=13) and (proximaLinha>=9 and proximaLinha<=13)) or     #movimento todo na 3a faixa
@@ -184,18 +187,12 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
     else: #"r"
         posicaoNaProximaLinha += quantidadeDeLinhasPraPular
 
-    print([int(proximaLinha), int(posicaoNaProximaLinha)])
     return [int(proximaLinha), int(posicaoNaProximaLinha)]
     
     
 
 def validaString(entrada):
     tamanhoDaEntrada = len(entrada)
-
-    for caractere in range(tamanhoDaEntrada): # 0 1 2
-        if (entrada[caractere] == ""):
-            return False
-            break 
 
     if (tamanhoDaEntrada == 3):
         if entrada[0].isdigit() and entrada[1].isdigit():
@@ -211,13 +208,20 @@ def validaString(entrada):
 
 
 def verificaLimites(entrada,tabuleiro):
-    if int(entrada[0]) and int(entrada[0]) <= len(tabuleiro):
-        if int(entrada[1]) >= 1 and int(entrada[1]) <= len(tabuleiro[int(entrada[0])])-1 :
+    if int(entrada[0]) >= 1 and int(entrada[0]) <= len(tabuleiro):
+        if int(entrada[1]) >= 1 and int(entrada[1]) <= len(tabuleiro[int(entrada[0])])-1:
             return True
 
         else:
             return False
 
+
+def verificaDirecao(entrada):
+    if entrada[2] == "r" or entrada[2] == "l" or entrada[2] == "dr" or entrada[2] == "dl" or entrada[2] == "ur" or entrada[2] == "ur":
+        return True
+
+    else:
+        return False
 
 
 def verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro):
@@ -243,17 +247,31 @@ def tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto=False):
 
         # Valida a entrada e se a peça existe no tabuleiro
         validaString(entrada)
-        linhaAtual = entrada[0]
-        posicaoNaLinhaAtual = entrada[1]
-
+        verificaDirecao(entrada)
         verificaLimites(entrada,tabuleiro)
 
-        #mov simples
-        if tabuleiro[linhaAtual-1][posicaoNaLinhaAtual-1] == jogadores[jogadorDaVez][1]:
-            novaLinha, novaPosicao = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False).split(",")
+        while validaString == False and verificaDirecao == False and verificaLimites == False:
+            print("Movimento inválido!\n")
+            entrada = input("Movimento: ").split("-")
 
+            validaString(entrada)
+            verificaDirecao(entrada)
+            verificaLimites(entrada,tabuleiro)
+
+        linhaAtual = entrada[0]
+        posicaoNaLinhaAtual = entrada[1]
+        direcao = entrada[2]
+
+        
+        #mov simples
+        if tabuleiro[int(linhaAtual)-1][int(posicaoNaLinhaAtual)-1] == jogadores[int(jogadorDaVez)][1]:
+            posicaoComLista = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)
+            novaLinha = int(posicaoComLista[0])
+            novaPosicao = int(posicaoComLista[0])
+            [4,3]
             if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
                 if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
+                    linhaAnterior, posicaoAnterior = linhaAtual,posicaoNaLinhaAtual
                     return [novaLinha,novaPosicao]
                 #mov c salto
                 else:
@@ -269,13 +287,23 @@ def tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto=False):
                                 entrada[0] = novaLinha
                                 entrada[1] = novaPosicao
                                 del entrada[2]
-                                return tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto3)
+                                return tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto)
 
             else:
                 return []
 
         else: 
             return []
+
+
+def movimento(linhaAnterior,posicaoAnterior,posicaoFinal,jogadores,tabuleiro,jogadorDaVez):
+    novaLinha = posicaoFinal[0]
+    novaPosicao = posicaoFinal[1]
+    tabuleiro[novaLinha-1][novaPosicao-1] = jogadores[jogadorDaVez][1]
+    tabuleiro[linhaAnterior-1][posicaoAnterior-1] = "O"
+
+    print(tabuleiro)
+
 
 
 '''
