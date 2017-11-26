@@ -87,7 +87,7 @@ def adicionarPecas(tabuleiro, numeroDeJogadores):
         for linha in range(4,0,-1):
             for coluna in range(linha):
                 tabuleiro[17-linha][coluna] = 'F'
-    
+    print("1. Adicionei as peças dos jogadores no tabuleiro")
     return tabuleiro
 
 
@@ -186,8 +186,9 @@ def pegarProximaPosicao(linhaAtual, posicaoNaLinhaAtual, direcao, salto):
         
     else: #"r"
         posicaoNaProximaLinha += quantidadeDeLinhasPraPular
-
-    return [int(proximaLinha), int(posicaoNaProximaLinha)]
+    print("2. Peguei a próxia posição do jogador no tabuleiro")
+    print(int(proximaLinha),int(posicaoNaProximaLinha))
+    return [proximaLinha,posicaoNaProximaLinha]
     
     
 
@@ -197,38 +198,72 @@ def validaString(entrada):
     if (tamanhoDaEntrada == 3):
         if entrada[0].isdigit() and entrada[1].isdigit():
             if entrada[2].isalpha():
+                print("3.Validei sua String, ela é válida")
                 return True
 
+            else:
+                print("Validei sua string, ela não é válida")
+                return False
+
         else:
+            print("3.Validei sua String, ela não é válida")
             return False
                                     
+    elif (tamanhoDaEntrada > 3):
+        if entrada[0].isdigit() and entrada[1].isdigit():
+            for i in range(2,len(entrada[2:])+2):
+                if entrada[i].isalpha() == False:
+                    print("3.Validei sua String composta, ela não é válida")
+                    return False
+                    
+                
+        else:
+            print("Validei sua String composta, ela não é válida")
+            return False
+
     else:
+        print("Validei sua String, ela não é válida")
         return False
+        
 
 
 
 def verificaLimites(entrada,tabuleiro):
     if int(entrada[0]) >= 1 and int(entrada[0]) <= len(tabuleiro):
-        if int(entrada[1]) >= 1 and int(entrada[1]) <= len(tabuleiro[int(entrada[0])])-1:
+        if int(entrada[1]) >= 1 and int(entrada[1]) <= len(tabuleiro[int(entrada[0])-1]):
+            print("4.Verifiquei os limites do tabuleiro, vc está nos limites")
             return True
 
         else:
+            print("4.Verifiquei os limites do tabuleiro, vc não está nos limites")
             return False
 
-
-def verificaDirecao(entrada):
-    if entrada[2] == "r" or entrada[2] == "l" or entrada[2] == "dr" or entrada[2] == "dl" or entrada[2] == "ur" or entrada[2] == "ur":
-        return True
-
     else:
+        print("4.Verifiquei os limites do tabuleiro, vc não está nos limites")
         return False
 
 
+def verificaDirecao(entrada):
+    if len(entrada) >= 3:
+        
+        if entrada[2] == "r" or entrada[2] == "l" or entrada[2] == "dr" or entrada[2] == "dl" or entrada[2] == "ur" or entrada[2] == "ul":
+            print("5.Verifiquei seu comando de direção, está correto")
+            return True
+
+        else:
+            print("5.Verifiquei seu comando de direção, está errado")
+            return False
+    else:
+        print("5.Verifiquei seu comando de direção, está errado")
+        return False
+
 def verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro):
     if tabuleiro[novaLinha-1][novaPosicao-1] == "O":
+        print("6.Verifiquei se existe um espaço vazio na sua nova posição, existe")
         return True
 
     else:
+        print("6.Verifiquei se existe um espaço vazio na sua nova posição, não existe")
         return False
 
 
@@ -250,63 +285,113 @@ def tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto=False):
         verificaDirecao(entrada)
         verificaLimites(entrada,tabuleiro)
 
-        while validaString == False and verificaDirecao == False and verificaLimites == False:
-            print("Movimento inválido!\n")
-            entrada = input("Movimento: ").split("-")
-
-            validaString(entrada)
-            verificaDirecao(entrada)
-            verificaLimites(entrada,tabuleiro)
-
-        linhaAtual = entrada[0]
-        posicaoNaLinhaAtual = entrada[1]
-        direcao = entrada[2]
-
+        if validaString(entrada) == True and verificaDirecao(entrada) == True and verificaLimites(entrada,tabuleiro) == True:
+    
         
-        #mov simples
-        if tabuleiro[int(linhaAtual)-1][int(posicaoNaLinhaAtual)-1] == jogadores[int(jogadorDaVez)][1]:
-            posicaoComLista = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)
-            novaLinha = int(posicaoComLista[0])
-            novaPosicao = int(posicaoComLista[0])
-            [4,3]
-            if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
-                if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
-                    linhaAnterior, posicaoAnterior = linhaAtual,posicaoNaLinhaAtual
-                    return [novaLinha,novaPosicao]
-                #mov c salto
-                else:
-                    salto=True
-                    novaLinha, novaPosicao = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto).split(",")
+            print("ValidaString: ",validaString(entrada))
+            print("VerificaDireção: ",verificaDirecao(entrada))
+            print("ValidaLimites: ",verificaLimites(entrada,tabuleiro))
+                    
+            linhaAtual = entrada[0]
+            posicaoNaLinhaAtual = entrada[1]
+            direcao = entrada[2]
 
-                    if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
-                        if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
-                            if len(entrada) == 3:
-                                return [novaLinha,novaPosicao]
+            print("linhaAtual: ",linhaAtual)
+            print("posiçãoNaLinhaAtual: ",posicaoNaLinhaAtual)
+            print("direção: ",direcao)
+
+            
+            #mov simples
+            if tabuleiro[int(linhaAtual)-1][int(posicaoNaLinhaAtual)-1] == jogadores[int(jogadorDaVez)][1]:
+                posicaoSemSalto = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto=False)
+                novaLinha = int(posicaoSemSalto[0])
+                novaPosicao = int(posicaoSemSalto[1])
+
+                auxiliarNovaLinha = posicaoSemSalto[0] #auxiliares para receber o valor sem ser inteiro
+                auxiliarNovaPosicao = posicaoSemSalto[1]
+            
+                if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
+                    if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
+                        linhaAnterior, posicaoAnterior = linhaAtual,posicaoNaLinhaAtual
+                        print("7.Defini sua próxima posição sem salto")
+                        return [novaLinha,novaPosicao]
+                    #mov c salto
+                    else:
+                        salto=True
+                        posicaoComSalto = pegarProximaPosicao(linhaAtual,posicaoNaLinhaAtual,direcao,salto)
+                        novaLinha = posicaoComSalto[0]
+                        novaPosicao = posicaoComSalto[1]
+
+                        if verificaLimites([novaLinha,novaPosicao],tabuleiro) == True:  
+                            if verificarEspacoVazio(novaLinha,novaPosicao,tabuleiro)== True:
+                                if len(entrada) == 3:
+                                    print("7.Defini sua próxima posição com salto")
+                                    return [novaLinha,novaPosicao]
+
+                                else:
+                                    entrada[0] = auxiliarNovaLinha
+                                    entrada[1] = auxiliarNovaPosicao
+                                    del entrada[2]
+                                    return tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto)
 
                             else:
-                                entrada[0] = novaLinha
-                                entrada[1] = novaPosicao
-                                del entrada[2]
-                                return tentarMovimento(entrada,jogadorDaVez,jogadores,tabuleiro,salto)
+                                return []
+
+                else:
+                    print("7.Não foi possível efetuar o movimento, você está saindo do tabuleiro")
+                    return []
 
             else:
+                print("7.Não foi possível efetuar o movimento, esta peça não é sua")
                 return []
 
-        else: 
+        else:
+            print("7.Não foi possível efetuar o movimento")
             return []
 
 
 def movimento(linhaAnterior,posicaoAnterior,posicaoFinal,jogadores,tabuleiro,jogadorDaVez):
     novaLinha = posicaoFinal[0]
+    print("nova linha: ",novaLinha)
     novaPosicao = posicaoFinal[1]
-    tabuleiro[novaLinha-1][novaPosicao-1] = jogadores[jogadorDaVez][1]
-    tabuleiro[linhaAnterior-1][posicaoAnterior-1] = "O"
+    tabuleiro[int(novaLinha)-1][int(novaPosicao)-1] = jogadores[jogadorDaVez][1]
+    tabuleiro[int(linhaAnterior)-1][int(posicaoAnterior)-1] = "O"
 
-    print(tabuleiro)
+    print("8.Fiz seu movimento, na teoria")
+    imprimirTabuleiro(tabuleiro)
 
+def validaVencedores(numeroDeJogadores,jogadores,jogadorDaVez,tabuleiro):
+    if numeroDeJogadores == 2:
+        if jogadorDaVez == 1:
+            contadorDePecas = 0
+            for linha in range (4):
+                for coluna in range (len(tabuleiro[linha])):
+                    if tabuleiro[linha][coluna] == "B":
+                        contadorDePecas += 1
+                    if contadorDePecas == 10:
+                        print('Jogador 2 venceu !!!!!!!!!!!!11')
+                        return True
+                    else:
+                        return False
 
+        else:
+            contadorDePecas = 0
+            for linha in range (13,17):
+                for coluna in range (len(tabuleiro[linha])):
+                    if tabuleiro[linha][coluna] == "A":
+                        contadorDePecas += 1
+                    if contadorDePecas == 10:
+                        print('Jogador 1 venceu !!!!!!!!!!!11')
+                        return True
+                    else:
+                        return False
+    
+            
+                            
+                
 
 '''
+
 
         while (validaString(entrada) == False) or (verificaLimites(entrada,tabuleiro) == False):
             print('Ops! movimento inválido, tente novamente.\n')

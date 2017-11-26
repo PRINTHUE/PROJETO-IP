@@ -132,6 +132,7 @@ def imprimirTabuleiro(tabuleiro):
 
 
 
-def pedirMovimento(jogadores,jogDaVez):
+'''def pedirMovimento(jogadores,jogDaVez):
     print("Jogador da Vez: {}".format(jogadores[jogDaVez][0]))
     return input("Insira seu movimento: ").split("-")
+'''
