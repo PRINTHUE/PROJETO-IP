@@ -338,7 +338,9 @@ def movimento(linhaAnterior,posicaoAnterior,posicaoFinal,jogadores,tabuleiro,jog
 
 
 def validaVencedores(numeroDeJogadores,jogadores,jogadorDaVez,tabuleiro):
+	# 2 jogadores
     if numeroDeJogadores == 2:
+    	# Se o jogador da vez for 2º jogador
         if jogadorDaVez == 1:
             contadorDePecas = 0
             for linha in range (4):
@@ -350,6 +352,7 @@ def validaVencedores(numeroDeJogadores,jogadores,jogadorDaVez,tabuleiro):
                     else:
                         return False
 
+        # Se o jogador for o 1º jogador
         else:
             contadorDePecas = 0
             for linha in range (13,17):
@@ -362,9 +365,23 @@ def validaVencedores(numeroDeJogadores,jogadores,jogadorDaVez,tabuleiro):
                         return False
     
             
-                            
+    # 3 jogadores
+     elif numeroDeJogadores == 3:
+     	# Se o jogador da vez for o 3º jogador
+     	if jogadorDaVez == 2:
+     		contadorDePecas = 0
+     		for linha in range (4):
+                for coluna in range (len(tabuleiro[linha])):
+                    if tabuleiro[linha][coluna] == "C":
+                        contadorDePecas += 1
+                    if contadorDePecas == 10:
+                        return True
+                    else:
+                        return False
                 
-
+        # Se o jogador da vez for o 2º jogador
+    	elif jogadorDaVez == 1:
+    		
 '''
 
 
